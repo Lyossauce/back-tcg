@@ -12,6 +12,9 @@ plugins:
 provider:
   name: aws
   runtime: nodejs16.x
+  environment: 
+    gamesTableName: Games
+    playersTableName: Players
 
 functions:
   create:
@@ -26,7 +29,7 @@ resources:
     GamesTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: Games
+        TableName: ${self:provider.environment.gamesTableName}
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
@@ -34,6 +37,28 @@ resources:
           - AttributeName: id
             KeyType: HASH
         BillingMode: PAY_PER_REQUEST
+
+    PlayersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:provider.environment.playersTableName}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+          - AttributeName: _gameId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+        GlobalSecondaryIndexes:
+        - IndexName: gameIndex
+          KeySchema:
+            - AttributeName: _gameId
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+
 
 custom:
   webpack:
@@ -51,3 +76,9 @@ custom:
       inMemory: true
       noStart: true
       migrate: true
+      seed: true
+    seed:
+      default:
+        sources:
+        - table: ${self:provider.environment.gamesTableName}
+          sources: [./seeds/games.json]

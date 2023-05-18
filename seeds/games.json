@@ -1,0 +1,15 @@
+[
+    {
+        "id": "1",
+        "turnNumber": 1,
+        "isFinished": false
+    },{
+        "id": "2",
+        "turnNumber": 1,
+        "isFinished": true,
+        "winner": {
+                "id": "1",
+                "name": "Player 1"
+            }
+        }
+]
