@@ -4,6 +4,7 @@ import { GameRepository } from '../../../helpers/repositories/GameRepository';
 import { NEW_PLAYER } from '../../../helpers/templates/player';
 import { PlayerRepository } from '../../../helpers/repositories/PlayerRepository';
 import { randomUUID } from 'crypto';
+import { playNextTurn } from '../../players/services/playNextTurn';
 
 /**
  * @name gameValidator
@@ -35,9 +36,13 @@ export const createGame = async (input: CreateGameInput): Promise<string> => {
     playOrder: 2,
   } as PlayerDbRecord;
 
+  const players = [player1, player2];
+
+  await playNextTurn(player2.id, players, game);
+
   await GameRepository.createOne(game);
 
-  await PlayerRepository.createMany([player1, player2]);
+  await PlayerRepository.createMany(players);
 
   return game.id;
 };

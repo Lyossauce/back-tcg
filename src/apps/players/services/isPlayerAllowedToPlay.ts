@@ -4,6 +4,7 @@ import { PostPlayerCardInput } from '../../../models/players';
 export const isPlayerAllowedToPlay = async (input: PostPlayerCardInput, players: PlayerDbRecord[]): Promise<boolean> => {
   const currentPlayer : PlayerDbRecord = players.find((player) => player.id === input.playerId) as PlayerDbRecord;
 
+  // Verify player order
   for (const player of players) {
     if (player.id === input.playerId) {
       continue;
@@ -19,18 +20,22 @@ export const isPlayerAllowedToPlay = async (input: PostPlayerCardInput, players:
     }
   }
 
+  // verify if player is skipping his turn
   if (input.cardId === 'skip') {
     return true;
   }
 
+  // verify if player has the card in his hand
   if (!currentPlayer.handCards.includes(input.cardId)) {
     return false;
   }
 
+  // verify if player has enough mana
   if (Number(input.cardId) < currentPlayer.mana) {
     return false;
   }
 
+  // verify if player has enough health points
   if (currentPlayer.healthPoints <= 0) {
     return false;
   }
