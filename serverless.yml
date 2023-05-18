@@ -29,6 +29,12 @@ functions:
     - http:
         path: games/{gameId}/players
         method: get
+  postPlayerCard:
+    handler: ./src/apps/players/handlers/postPlayerCard.main
+    events:
+    - http:
+        path: games/{gameId}/players/{playerId}/cards
+        method: post
 
 resources:
   Resources:
