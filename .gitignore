@@ -1,0 +1,44 @@
+# package directories
+node_modules
+
+# dev env directories
+.idea
+.vscode
+
+# vagrant files and directories
+.vagrant
+Vagrantfile
+
+# Serverless files and directories
+.serverless
+.dynamodb
+.buckets
+.aws
+.build
+.webpack
+.serverlessrc
+.serverless-secrets-*.yml
+serverless-secrets-*.yml
+!.serverless-secrets-local.yml
+stack.json
+
+# jest coverage directories
+coverage
+
+# eslint
+.eslintcache
+
+# npm / yarn
+yarn-error.log*
+yarn.lock*
+package-lock.json
+jspm_packages
+.npmrc
+
+# Misc
+conf
+.config
+TODO.md
+
+# tsoa
+build
