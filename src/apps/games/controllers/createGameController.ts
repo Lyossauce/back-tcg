@@ -40,7 +40,7 @@ export const createGameController = async (request: APIGatewayProxyEvent) => {
  *
  * @returns {CreateGameInput}
  */
-const gameValidator = async (request: APIGatewayProxyEvent):  Promise<CreateGameInput> => {
+export const gameValidator = async (request: APIGatewayProxyEvent):  Promise<CreateGameInput> => {
   if (!request.body) throw new Error('Missing body');
 
   const schema = Joi.object({

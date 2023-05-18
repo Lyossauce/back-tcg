@@ -114,10 +114,6 @@
       "error",
       4
     ],
-    "max-nested-callbacks": [
-      "error",
-      3
-    ],
     "new-cap": [
       "error",
       {
