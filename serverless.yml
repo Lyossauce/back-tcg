@@ -15,29 +15,25 @@ provider:
 
 functions:
   create:
-    handler: ./src/handlers/createEmployee.main
+    handler: ./src/apps/games/handlers/createGame.main
     events:
     - http:
-        path: employees
+        path: games
         method: post
 
 resources:
-  GameTable:
-    Type: AWS::DynamoDB::Table
-    Properties:
-      TableName: Games
-      AttributeDefinitions:
-        - AttributeName: id
-          AttributeType: S
-      KeySchema:
-        - AttributeName: id
-          KeyType: HASH
-      GlobalSecondaryIndexes:
-        - IndexName: hello
-          KeySchema: 
-          Projection:
-            ProjectionType: ALL
- 
+  Resources:
+    GamesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Games
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
 
 custom:
   webpack:
@@ -51,7 +47,7 @@ custom:
     start:
       docker: true
       image: dynamodb-local
-      port: ${param-dynamodbPort}
+      port: 8000
       inMemory: true
       noStart: true
       migrate: true
