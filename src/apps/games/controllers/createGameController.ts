@@ -48,7 +48,9 @@ const gameValidator = async (request: APIGatewayProxyEvent):  Promise<CreateGame
     player2Name: Joi.string().required(),
   });
 
-  await schema.validateAsync(JSON.parse(request.body));
+  const body = JSON.parse(request.body);
 
-  return request.body as unknown as CreateGameInput;
+  await schema.validateAsync(body);
+
+  return body as CreateGameInput;
 };
