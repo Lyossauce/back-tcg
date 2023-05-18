@@ -17,12 +17,18 @@ provider:
     playersTableName: Players
 
 functions:
-  create:
+  createGame:
     handler: ./src/apps/games/handlers/createGame.main
     events:
     - http:
         path: games
         method: post
+  getPlayers:
+    handler: ./src/apps/players/handlers/getPlayers.main
+    events:
+    - http:
+        path: games/{gameId}/players
+        method: get
 
 resources:
   Resources:
