@@ -32,13 +32,23 @@ export const createGameController = async (request: APIGatewayProxyEvent) => {
   };
 };
 
+
+/**
+ * @name gameValidator
+ * @description Validate input in request for CreateGame
+ * @param {APIGatewayProxyEvent} request
+ *
+ * @returns {CreateGameInput}
+ */
 const gameValidator = async (request: APIGatewayProxyEvent):  Promise<CreateGameInput> => {
+  if (!request.body) throw new Error('Missing body');
+
   const schema = Joi.object({
     player1Name: Joi.string().required(),
     player2Name: Joi.string().required(),
   });
 
-  await schema.validateAsync(request.body);
+  await schema.validateAsync(JSON.parse(request.body));
 
   return request.body as unknown as CreateGameInput;
 };
