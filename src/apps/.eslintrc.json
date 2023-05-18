@@ -186,6 +186,9 @@
     "prefer-spread":"error",
     "prefer-template":"error",
     "require-yield":"error",
+    "sort-imports": ["error", {
+      "ignoreCase": true
+    }],
     "import/prefer-default-export": "off",
     "no-iterator": "off",
     "no-param-reassign": "off",
