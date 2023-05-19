@@ -1,8 +1,21 @@
 import { PlayerDbRecord } from '../../../models/DbRecords';
 import { PostPlayerCardInput } from '../../../models/players';
 
+/**
+ * @name isPlayerAllowedToPlay
+ * @description Verify if the player is allowed to play the move
+ * @param {PostPlayerCardInput} input
+ * @param {PlayerDbRecord[]} players
+ *
+ * @returns {Promise<boolean>}
+ */
 export const isPlayerAllowedToPlay = async (input: PostPlayerCardInput, players: PlayerDbRecord[]): Promise<boolean> => {
   const currentPlayer : PlayerDbRecord = players.find((player) => player.id === input.playerId) as PlayerDbRecord;
+
+  // Verify if player is playing
+  if (!currentPlayer.isPlaying) {
+    return false;
+  }
 
   // Verify player order
   for (const player of players) {

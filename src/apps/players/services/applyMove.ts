@@ -4,6 +4,14 @@ import { PlayerRepository } from '../../../helpers/repositories/PlayerRepository
 import { playNextTurn } from './playNextTurn';
 import { PostPlayerCardInput } from '../../../models/players';
 
+/**
+ * @name applyMove
+ * @description Apply the player move to the game and to the other players
+ * @param {PostPlayerCardInput} input
+ * @param {PlayerDbRecord[]} players
+ * @param {GameDbRecord} game
+ *
+ */
 export const applyMove = async (input: PostPlayerCardInput, players: PlayerDbRecord[], game: GameDbRecord) => {
   const nextPlayer = input.cardId === 'skip';
 

@@ -61,7 +61,13 @@ export const postPlayerCardController = async (request: APIGatewayProxyEvent) =>
   };
 };
 
-
+/**
+ * @name playerCardValidator
+ * @description Validate the request
+ * @param {APIGatewayProxyEvent} request
+ *
+ * @returns {Promise<PostPlayerCardInput>}
+ */
 const playerCardValidator = async (request: APIGatewayProxyEvent):  Promise<PostPlayerCardInput> => {
   if (!request.body) throw new Error('Missing body');
 

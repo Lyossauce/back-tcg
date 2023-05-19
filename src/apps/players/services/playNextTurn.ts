@@ -1,5 +1,14 @@
 import { GameDbRecord, PlayerDbRecord } from '../../../models/DbRecords';
 
+/**
+ * @name playNextTurn
+ * @description Apply the change of player turn
+ * @param {string} playerId
+ * @param {PlayerDbRecord[]} players
+ * @param {GameDbRecord} game
+ *
+ * @returns {Promise<boolean>}
+ */
 export const playNextTurn = async (playerId: string, players: PlayerDbRecord[], game: GameDbRecord) => {
   players = players.sort((a, b) => a.playOrder - b.playOrder);
 
