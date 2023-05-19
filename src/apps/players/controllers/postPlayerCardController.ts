@@ -16,7 +16,17 @@ import { PostPlayerCardInput } from '../../../models/players';
  */
 export const postPlayerCardController = async (request: APIGatewayProxyEvent) => {
   // IMPROVEMENT: execute validation and data fetching in parallel
-  const input : PostPlayerCardInput = await playerCardValidator(request);
+  let input : PostPlayerCardInput;
+  try {
+    input = await playerCardValidator(request);
+  } catch (e: any) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({
+        message: e.message,
+      }),
+    };
+  }
 
   const players : PlayerDbRecord[] = await PlayerRepository.getByGameId(input.gameId);
 
@@ -68,7 +78,7 @@ export const postPlayerCardController = async (request: APIGatewayProxyEvent) =>
  *
  * @returns {Promise<PostPlayerCardInput>}
  */
-const playerCardValidator = async (request: APIGatewayProxyEvent):  Promise<PostPlayerCardInput> => {
+export const playerCardValidator = async (request: APIGatewayProxyEvent):  Promise<PostPlayerCardInput> => {
   if (!request.body) throw new Error('Missing body');
 
   const schema = Joi.object({
