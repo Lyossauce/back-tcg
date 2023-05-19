@@ -20,7 +20,12 @@ export const playNextTurn = (playerId: string, players: PlayerDbRecord[], game: 
     }
   }
   if (numberOfDeadPlayers === players.length - 1) {
+    const winner = players.find((player) => player.healthPoints > 0) as PlayerDbRecord;
     game.isFinished = true;
+    game.winner = {
+      playerId: winner.id as string,
+      name: winner.name as string,
+    };
 
     return;
   }
@@ -44,11 +49,11 @@ export const playNextTurn = (playerId: string, players: PlayerDbRecord[], game: 
       nextPlayer.handCards.push(nextPlayer.hiddenCards[randomNumber]);
     }
     nextPlayer.hiddenCards.splice(randomNumber, 1);
+  } else {
+    nextPlayer.healthPoints -= 1;
   }
 
-  // verify if player has cards in his hand
   if (nextPlayer.handCards.length === 0) {
-    nextPlayer.healthPoints -= 1;
     // play next turn
     playNextTurn(nextPlayer.id, players, game);
   }
