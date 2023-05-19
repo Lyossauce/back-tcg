@@ -11,6 +11,7 @@ export interface GameDbRecord {
 export interface PlayerDbRecord {
     id: string;
     _gameId: string;
+    isPlaying: boolean;
     name: string;
     healthPoints: number;
     handCards: string[];

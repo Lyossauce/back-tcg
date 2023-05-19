@@ -19,6 +19,7 @@ export const playNextTurn = async (playerId: string, players: PlayerDbRecord[], 
   // find next player
   const currentPlayer : PlayerDbRecord = players.find((player) => player.id === playerId) as PlayerDbRecord;
   currentPlayer.turnNumber++;
+  currentPlayer.isPlaying = false;
   let nextPlayer : PlayerDbRecord = players.find((player) => player.playOrder === currentPlayer.playOrder + 1) as PlayerDbRecord;
   if (!nextPlayer) {
     game.turnNumber++;
@@ -26,6 +27,7 @@ export const playNextTurn = async (playerId: string, players: PlayerDbRecord[], 
   }
 
   nextPlayer.mana += 1;
+  nextPlayer.isPlaying = true;
   // add a card to the player's hand
   if (nextPlayer.hiddenCards.length > 0) {
     const randomNumber = Math.floor(Math.random() * (nextPlayer.hiddenCards.length - 1));
