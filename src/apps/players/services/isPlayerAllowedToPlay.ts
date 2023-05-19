@@ -44,7 +44,7 @@ export const isPlayerAllowedToPlay = (input: PostPlayerCardInput, players: Playe
   }
 
   // verify if player has enough mana
-  if (Number(input.cardId) < currentPlayer.mana) {
+  if (Number(input.cardId) > currentPlayer.mana) {
     return false;
   }
 
