@@ -3,8 +3,8 @@ import { CreateGameInput } from '../../../models/games';
 import { GameRepository } from '../../../helpers/repositories/GameRepository';
 import { NEW_PLAYER } from '../../../helpers/templates/player';
 import { PlayerRepository } from '../../../helpers/repositories/PlayerRepository';
-import { randomUUID } from 'crypto';
 import { playNextTurn } from '../../players/services/playNextTurn';
+import { randomUUID } from 'crypto';
 
 /**
  * @name gameValidator
@@ -26,6 +26,7 @@ export const createGame = async (input: CreateGameInput): Promise<string> => {
     name: input.player1Name,
     ...NEW_PLAYER,
     playOrder: 1,
+    isPlaying: false,
   } as PlayerDbRecord;
 
   const player2 : PlayerDbRecord = {
@@ -34,11 +35,12 @@ export const createGame = async (input: CreateGameInput): Promise<string> => {
     name: input.player2Name,
     ...NEW_PLAYER,
     playOrder: 2,
+    isPlaying: true,
   } as PlayerDbRecord;
 
   const players = [player1, player2];
 
-  await playNextTurn(player2.id, players, game);
+  playNextTurn(player2.id, players, game);
 
   await GameRepository.createOne(game);
 

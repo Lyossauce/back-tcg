@@ -40,7 +40,7 @@ export const postPlayerCardController = async (request: APIGatewayProxyEvent) =>
     };
   }
 
-  const canPlay : boolean = await isPlayerAllowedToPlay(input, players);
+  const canPlay : boolean = isPlayerAllowedToPlay(input, players);
 
   if (!canPlay) {
     return {

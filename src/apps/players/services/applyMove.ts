@@ -28,7 +28,7 @@ export const applyMove = async (input: PostPlayerCardInput, players: PlayerDbRec
 
 
   if (nextPlayer || currentPlayer.handCards.length === 0) {
-    await playNextTurn(input.playerId, players, game);
+    playNextTurn(input.playerId, players, game);
 
     await GameRepository.updateOne(game);
   }

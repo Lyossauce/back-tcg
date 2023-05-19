@@ -9,7 +9,7 @@ import { GameDbRecord, PlayerDbRecord } from '../../../models/DbRecords';
  *
  * @returns {Promise<boolean>}
  */
-export const playNextTurn = async (playerId: string, players: PlayerDbRecord[], game: GameDbRecord) => {
+export const playNextTurn = (playerId: string, players: PlayerDbRecord[], game: GameDbRecord) => {
   players = players.sort((a, b) => a.playOrder - b.playOrder);
 
   // Verify if the game is finished
@@ -50,6 +50,6 @@ export const playNextTurn = async (playerId: string, players: PlayerDbRecord[], 
   if (nextPlayer.handCards.length === 0) {
     nextPlayer.healthPoints -= 1;
     // play next turn
-    await playNextTurn(nextPlayer.id, players, game);
+    playNextTurn(nextPlayer.id, players, game);
   }
 };

@@ -47,6 +47,7 @@ describe('Get Players Controller', () => {
     'id': '2f44b119-d992-4287-8ea6-950d9c9415a4',
     'handCards': [],
     'playOrder': 2,
+    'isPlaying': true,
   }];
 
   describe('createGameController', () => {

@@ -1,3 +1,4 @@
+import * as playNextTurnService from '../../../../src/apps/players/services/playNextTurn';
 import { createGame } from '../../../../src/apps/games/services/createGame';
 import { GameRepository } from '../../../../src/helpers/repositories/GameRepository';
 import { PlayerRepository } from '../../../../src/helpers/repositories/PlayerRepository';
@@ -17,10 +18,13 @@ describe('Create Game', () => {
   describe('createGame', () => {
     let createOneSpy: jest.SpyInstance;
     let createManySpy: jest.SpyInstance;
+    let playNextTurnSpy: jest.SpyInstance;
 
     beforeAll(() => {
       createOneSpy = jest.spyOn(GameRepository, 'createOne');
       createManySpy = jest.spyOn(PlayerRepository, 'createMany');
+      playNextTurnSpy = jest.spyOn(playNextTurnService, 'playNextTurn');
+      playNextTurnSpy.mockReturnValue(undefined);
     });
 
     it('should create game and players', async () => {
@@ -36,6 +40,7 @@ describe('Create Game', () => {
         name: createGameInput.player1Name,
         playOrder: 1,
         ...NEW_PLAYER,
+        isPlaying: false,
       };
 
       const player2 = {
@@ -44,6 +49,7 @@ describe('Create Game', () => {
         name: createGameInput.player2Name,
         playOrder: 2,
         ...NEW_PLAYER,
+        isPlaying: true,
       };
 
       createOneSpy.mockResolvedValue(game);
@@ -56,6 +62,8 @@ describe('Create Game', () => {
       expect(createOneSpy).toHaveBeenCalledWith(game);
       expect(createManySpy).toHaveBeenCalledTimes(1);
       expect(createManySpy).toHaveBeenCalledWith([player1, player2]);
+      expect(playNextTurnSpy).toHaveBeenCalledTimes(1);
+      expect(playNextTurnSpy).toHaveBeenCalledWith(player2.id, [player1, player2], game);
     });
   });
 });

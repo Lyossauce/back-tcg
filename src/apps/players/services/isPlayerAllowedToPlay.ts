@@ -9,7 +9,7 @@ import { PostPlayerCardInput } from '../../../models/players';
  *
  * @returns {Promise<boolean>}
  */
-export const isPlayerAllowedToPlay = async (input: PostPlayerCardInput, players: PlayerDbRecord[]): Promise<boolean> => {
+export const isPlayerAllowedToPlay = (input: PostPlayerCardInput, players: PlayerDbRecord[]): boolean => {
   const currentPlayer : PlayerDbRecord = players.find((player) => player.id === input.playerId) as PlayerDbRecord;
 
   // Verify if player is playing
