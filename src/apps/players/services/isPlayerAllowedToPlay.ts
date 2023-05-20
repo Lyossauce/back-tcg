@@ -11,7 +11,6 @@ import { PostPlayerCardInput } from '../../../models/players';
  */
 export const isPlayerAllowedToPlay = (input: PostPlayerCardInput, players: PlayerDbRecord[]): boolean => {
   const currentPlayer : PlayerDbRecord = players.find((player) => player.id === input.playerId) as PlayerDbRecord;
-
   // Verify if player is playing
   if (!currentPlayer.isPlaying) {
     return false;
