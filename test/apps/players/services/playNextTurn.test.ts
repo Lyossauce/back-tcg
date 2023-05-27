@@ -57,7 +57,7 @@ describe('Play Next Turn Service', () => {
           turnNumber: 2,
           handCards: ['1', '2', '3', '4', '5'],
           hiddenCards: ['1'],
-          mana: 2,
+          mana: 3,
           healthPoints: 1,
           _gameId: 'gameId',
         } as PlayerDbRecord,
