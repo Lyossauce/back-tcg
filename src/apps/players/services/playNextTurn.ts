@@ -40,21 +40,25 @@ export const playNextTurn = (playerId: string, players: PlayerDbRecord[], game: 
     nextPlayer = players[0];
   }
 
-  nextPlayer.mana += 1;
-  nextPlayer.isPlaying = true;
   // add a card to the player's hand
-  if (nextPlayer.hiddenCards.length > 0) {
-    const randomNumber = Math.floor(Math.random() * (nextPlayer.hiddenCards.length - 1));
-    if (nextPlayer.handCards.length < 5) {
-      nextPlayer.handCards.push(nextPlayer.hiddenCards[randomNumber]);
-    }
-    nextPlayer.hiddenCards.splice(randomNumber, 1);
-  } else {
-    nextPlayer.healthPoints -= 1;
-  }
+  addCardToPlayerHand(nextPlayer);
 
   if (nextPlayer.handCards.length === 0) {
     // play next turn
     playNextTurn(nextPlayer.id, players, game);
+  }
+};
+
+export const addCardToPlayerHand = (player: PlayerDbRecord) => {
+  player.mana += 1 + 1 * Math.floor(player.turnNumber/2);
+  player.isPlaying = true;
+  if (player.hiddenCards.length > 0) {
+    const randomNumber = Math.floor(Math.random() * (player.hiddenCards.length - 1));
+    if (player.handCards.length < 5) {
+      player.handCards.push(player.hiddenCards[randomNumber]);
+    }
+    player.hiddenCards.splice(randomNumber, 1);
+  } else {
+    player.healthPoints -= 1;
   }
 };
