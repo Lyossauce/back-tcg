@@ -7,7 +7,7 @@ import { marshall } from '@aws-sdk/util-dynamodb';
 // @ts-ignore
 const dbMock = mockClient(DynamoDBClient);
 
-describe('Create Game', () => {
+describe('Game Repository', () => {
 
   const game : GameDbRecord = {
     id: 'id',
