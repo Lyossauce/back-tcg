@@ -35,9 +35,12 @@ describe('Create Game', () => {
         id: expect.any(String),
         _gameId: game.id,
         name: createGameInput.player1Name,
-        playOrder: 1,
-        ...NEW_PLAYER,
+        healthPoints: 30,
         mana: 1,
+        handCards: expect.any(Array),
+        hiddenCards: expect.any(Array),
+        turnNumber: 0,
+        playOrder: 1,
         isPlaying: true,
       };
 
@@ -45,8 +48,12 @@ describe('Create Game', () => {
         id: expect.any(String),
         _gameId: game.id,
         name: createGameInput.player2Name,
+        healthPoints: 30,
+        mana: 0,
+        handCards: [],
+        hiddenCards: [...(NEW_PLAYER.hiddenCards as string[])],
+        turnNumber: 0,
         playOrder: 2,
-        ...NEW_PLAYER,
         isPlaying: false,
       };
 
@@ -60,6 +67,8 @@ describe('Create Game', () => {
       expect(createOneSpy).toHaveBeenCalledWith(game);
       expect(createManySpy).toHaveBeenCalledTimes(1);
       expect(createManySpy).toHaveBeenCalledWith([player1, player2]);
+      expect(createManySpy.mock.calls[0][0][0].handCards.length).toEqual(1);
+      expect(createManySpy.mock.calls[0][0][0].hiddenCards.length).toEqual(19);
     });
   });
 });
